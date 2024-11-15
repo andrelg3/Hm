@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sará que passa?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 100%;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+    .status-image {
+      display: none;
+      width: 100px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Será que você já passou da UC do professor AndreLG</h2>
+    <label for="matricula">Matrícula:</label>
+    <input type="text" id="matricula" placeholder="Digite sua matrícula">
+    <button onclick="verificarStatus()">Verificar</button>
+    <div id="result"></div>
+
+    <!-- Imagens para os status de aprovação e reprovação -->
+    <img id="aprovadoImg" class="status-image" src="aprovado.png" alt="Aprovado">
+    <img id="naoAprovadoImg" class="status-image" src="nao_aprovado.png" alt="Não Aprovado">
+  </div>
+
+  <script>
+    function verificarStatus() {
+      const matricula = document.getElementById("matricula").value;
+
+      // Resetar imagens e mensagem
+      document.getElementById("aprovadoImg").style.display = "none";
+      document.getElementById("naoAprovadoImg").style.display = "none";
+      document.getElementById("result").innerText = "";
+
+      // Realizar requisição ao servidor
+      fetch(`http://localhost:3000/verificar-status/${matricula}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("result").innerText = data.mensagem;
+
+          // Exibir imagem com base no status de aprovação
+          if (data.statusAprovacao) {
+            document.getElementById("aprovadoImg").style.display = "block";
+          } else {
+            document.getElementById("naoAprovadoImg").style.display = "block";
+          }
+        })
+        .catch(error => {
+          document.getElementById("result").innerText = "Erro ao verificar status.";
+          console.error('Erro:', error);
+        });
+    }
+  </script>
+</body>
+</html>
