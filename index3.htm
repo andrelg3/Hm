@@ -82,7 +82,7 @@
       document.getElementById("result").innerText = "";
 
       // Realizar requisição ao servidor
-      fetch(`http://localhost:3000/verificar-status/${matricula}`)
+      fetch(`https://hm-bo08.onrender.com/verificar-status/${matricula}`)
         .then(response => response.json())
         .then(data => {
           document.getElementById("result").innerText = data.mensagem;
