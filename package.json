@@ -1,0 +1,12 @@
+{
+  "name": "nome-do-seu-projeto",
+  "version": "1.0.0",
+  "description": "Projeto para verificar status de aprovação de alunos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
